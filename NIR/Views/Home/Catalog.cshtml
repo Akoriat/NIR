@@ -1,0 +1,48 @@
+﻿<script>
+    function genreChanged(selectElement) {
+        var selectedGenre = selectElement.value;
+        $.ajax({
+            type: "GET",
+            url: "GetGenreData",
+            data: { Genre: selectedGenre },
+            success: function (data) {
+                $('#oleg').html(data);
+            },
+            error: function () {
+                alert("Ошибка при выполнении запроса");
+            }
+        });
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог - Книжный магазин</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <section class="catalog">
+            <div class="container">
+                <h2>Каталог книг</h2>
+
+                <div class="filters">
+                    <h3>Фильтры</h3>
+                    <form>
+                        @Html.DropDownList("Genre", ViewBag.GenreList as SelectList, "Выберите жанр", new { @class = "form-control", onchange = "genreChanged(this)" })
+                    </form>
+                </div>
+
+                <div class="book-grid">
+                    <div id="oleg"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
